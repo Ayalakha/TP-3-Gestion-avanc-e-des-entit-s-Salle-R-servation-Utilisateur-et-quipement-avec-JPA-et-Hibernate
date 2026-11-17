@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- JPA yapılandırma dosyası: kalıcılık birimi (persistence unit) tanımı -->
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+
+    <!-- RESOURCE_LOCAL: işlemler (transaction) uygulama tarafından yerel olarak yönetilir -->
+    <persistence-unit name="gestion-reservations-pu" transaction-type="RESOURCE_LOCAL">
+        <!-- JPA sağlayıcısı olarak Hibernate kullanılır -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Yönetilecek varlık (entity) sınıfları -->
+        <class>com.example.model.Salle</class>
+        <class>com.example.model.Reservation</class>
+        <class>com.example.model.Utilisateur</class>
+        <class>com.example.model.Equipement</class>
+
+        <properties>
+            <!-- H2 bellek içi veritabanı bağlantı bilgileri -->
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <!-- DB_CLOSE_DELAY=-1: son bağlantı kapansa bile veritabanı JVM açık olduğu sürece yaşar -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+
+            <!-- Hibernate'in H2 için SQL lehçesi -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <!-- update: tablolar varlıklara göre otomatik oluşturulur / güncellenir -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!-- Üretilen SQL sorgularını konsolda göster ve biçimlendir (hata ayıklama için) -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
